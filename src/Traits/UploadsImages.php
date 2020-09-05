@@ -135,7 +135,7 @@ trait UploadsImages
             Storage::disk($disk)->move($filename, $compressedFileName);
 
             Image::make(Storage::disk($disk)->path($compressedFileName))
-                ->resize($width, $height, function (Constraint $constraint) {
+                ->resize(($width ?? 1200), ($height ?? 1200), function (Constraint $constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })->save(Storage::disk($disk)->path($compressedFileName));
