@@ -5,6 +5,7 @@ namespace Invibe\CommonHelpers\Traits;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
 use Mimey\MimeTypes;
 use Throwable;
@@ -132,6 +133,13 @@ trait UploadsImages
 
         } else {
             Storage::disk($disk)->move($filename, $compressedFileName);
+
+            Image::make(Storage::disk($disk)->path($compressedFileName))
+                ->resize($width, $height, function (Constraint $constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->save(Storage::disk($disk)->path($compressedFileName));
+
         }
 
         // Create webp image variant
