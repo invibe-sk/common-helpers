@@ -43,6 +43,6 @@ class BasicJson
      */
     public function responseFalse($data) : JsonResponse
     {
-        return $this->response(true, $data);
+        return $this->response(false, $data);
     }
 }
