@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'use_tinify' => env('USE_TINIFY', false),
-    'tinify_api_key' => env('TINIFY_API_KEY'),
+    'use_tinyfy' => env('USE_TINYFY', false),
+    'tinyfy_api_key' => env('TINYFY_API_KEY'),
 
 //    'image_compressions_enabled' => env('IMAGE_COMPRESSION_ENABLED', true),
 //    'image_compressions_on_queue' => env('IMAGE_COMPRESSION_ON_QUEUE', false),

@@ -113,15 +113,15 @@ trait UploadsImages
 
         $compressedFileName = "c_{$name}.{$ext}";
 
-        if (config('common-helpers.use_tinify')) {
+        if (config('common-helpers.use_tinyfy')) {
 
-            // Set tinify key
-            setKey(config('common-helpers.tinify_api_key'));
+            // Set tinyfy key
+            setKey(config('common-helpers.tinyfy_api_key'));
 
-            // Load compressed tinify file from filename
+            // Load compressed tinyfy file from filename
             $compressedImage = fromFile(Storage::disk($disk)->path($filename));
 
-            // Resize compressed tinify file to fit the resolution provided
+            // Resize compressed tinyfy file to fit the resolution provided
             $resizedCompressedImage = $compressedImage->resize([
                 "method" => "fit",
                 "width" => $width ?? 1200,
