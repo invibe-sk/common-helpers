@@ -1,0 +1,36 @@
+{
+    "name": "invibe-sk/common-helpers",
+    "description": "Common helpers, traits, etc. for our use cases",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adam Ondrejkovič",
+            "email": "adam.ondrejkovic@invibe.sk"
+        }
+    ],
+    "require": {
+        "intervention/image": "^2.5",
+        "ralouphie/mimey": "^2.1",
+        "tinify/tinify": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Invibe\\CommonHelpers\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Invibe\\CommonHelpers\\CommonHelpersServiceProvider"
+            ],
+            "aliases": {
+                "Helpers": "Invibe\\CommonHelpers\\Facades\\Helpers",
+                "BasicJson": "Invibe\\CommonHelpers\\Facades\\BasicJson"
+            }
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.5"
+    }
+}
