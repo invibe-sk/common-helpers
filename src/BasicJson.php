@@ -15,10 +15,10 @@ class BasicJson
     /**
      * @param bool $result
      * @param $data
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      * @author Adam Ondrejkovic
      */
-    public function response(bool $result, $data)
+    public function response(bool $result, $data) : JsonResponse
     {
         return response()->json([
             'result' => $result,
@@ -28,20 +28,20 @@ class BasicJson
 
     /**
      * @param $data
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      * @author Adam Ondrejkovic
      */
-    public function responseTrue($data)
+    public function responseTrue($data) : JsonResponse
     {
         return $this->response(true, $data);
     }
 
     /**
      * @param $data
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      * @author Adam Ondrejkovic
      */
-    public function responseFalse($data)
+    public function responseFalse($data) : JsonResponse
     {
         return $this->response(true, $data);
     }
