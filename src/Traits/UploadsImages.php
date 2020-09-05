@@ -5,11 +5,8 @@ namespace Invibe\CommonHelpers\Traits;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
-use Invibe\CommonHelpers\Jobs\CompressImage;
 use Mimey\MimeTypes;
-use Psr\Http\Message\StreamInterface;
 use Throwable;
 use function Tinify\fromFile;
 use function Tinify\setKey;
@@ -31,7 +28,7 @@ trait UploadsImages
      */
     public function getImageUrl($image, bool $webp = false) : string
     {
-        $filename = $webp ? $this->webpFileName($this->{$image}) : $this->{$image};
+        $filename = $webp ? webpFileName($this->{$image}) : $this->{$image};
         return Storage::disk($this->getImageUrlDisk())->url($filename);
     }
 
@@ -46,15 +43,14 @@ trait UploadsImages
     }
 
     /**
-     * @param string $value
+     * @param string|null $value
      * @param string $attributeName
      * @param int|null $width
      * @param int|null $height
-     *
      * @return $this
      * @author Adam Ondrejkovic
      */
-    public function uploadImage(string $value, string $attributeName, int $width = null, int $height = null)
+    public function uploadImage(string $attributeName, string $value = null, int $width = null, int $height = null)
     {
         $disk = $this->getImageUrlDisk();
 
@@ -62,6 +58,7 @@ trait UploadsImages
         if ($value==null) {
             // delete the image from disk
             Storage::disk($disk)->delete($this->{$attributeName});
+            Storage::disk($disk)->delete(webpFileName($this->{$attributeName}));
 
             // set null in the database column
             $this->attributes[$attributeName] = null;
@@ -88,7 +85,7 @@ trait UploadsImages
 
             // Delete the previous image, if there was one.
             Storage::disk($disk)->delete($this->{$attributeName});
-            Storage::disk($disk)->delete($this->webpFileName($this->{$attributeName}));
+            Storage::disk($disk)->delete(webpFileName($this->{$attributeName}));
 
             // Set attr
             $this->attributes[$attributeName] = $compressedFileName;
@@ -109,7 +106,7 @@ trait UploadsImages
     {
 
         // Get compressed filename
-        $ext = $this->getImageExt($filename);
+        $ext = explode(".", $filename)[1];
         $disk = $this->getImageUrlDisk();
         $name = md5($value.time().time());
 
@@ -137,25 +134,14 @@ trait UploadsImages
             Storage::disk($disk)->move($filename, $compressedFileName);
         }
 
-
         // Create webp image variant
         $webp = Image::make(Storage::disk($disk)->path($compressedFileName))->encode('webp', 80)->stream();
-        Storage::disk($disk)->put($this->webpFileName($compressedFileName), $webp);
+        Storage::disk($disk)->put(webpFileName($compressedFileName), $webp);
 
         // Delete uncompressed image if there is any
         Storage::disk($disk)->delete($filename);
 
         return $compressedFileName;
-    }
-
-    /**
-     * @param $filename
-     * @return string
-     * @author Adam Ondrejkovic
-     */
-    public function webpFileName($filename)
-    {
-        return explode(".", $filename)[0] . ".webp";
     }
 
     /**
@@ -185,6 +171,6 @@ trait UploadsImages
     public function getAdminImageElement($image)
     {
         $image = $this->getImageUrl($image);
-        return view('common-helpers::image', compact('image'))->render();
+        return view('common-helpers::admin-image-element', compact('image'))->render();
     }
 }

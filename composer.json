@@ -16,8 +16,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Invibe\\CommonHelpers\\": "src/"
-        }
+            "Invibe\\CommonHelpers\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "extra": {
         "laravel": {
@@ -25,7 +28,7 @@
                 "Invibe\\CommonHelpers\\CommonHelpersServiceProvider"
             ],
             "aliases": {
-                "Helpers": "Invibe\\CommonHelpers\\Facades\\Helpers",
+                "TinyMceConfig": "Invibe\\CommonHelpers\\Facades\\TinyMceConfig",
                 "BasicJson": "Invibe\\CommonHelpers\\Facades\\BasicJson"
             }
         }

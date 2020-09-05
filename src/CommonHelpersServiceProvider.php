@@ -16,15 +16,15 @@ class CommonHelpersServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('helpers', function ($app) {
-            return new Helpers();
+        $this->app->bind('tinyMceConfig', function ($app) {
+            return new TinyMceConfig();
         });
 
         $this->app->bind('basicJson', function ($app) {
             return new BasicJson();
         });
 
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'common-helpers');
+        $this->mergeConfigFrom(__DIR__.'/config/config.php', 'common-helpers');
 
         $this->loadViewsFrom(__DIR__.'/views', 'common-helpers');
     }
@@ -37,7 +37,7 @@ class CommonHelpersServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
 
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('common-helpers.php'),
+                __DIR__.'/config/config.php' => config_path('common-helpers.php'),
             ], 'config');
 
         }

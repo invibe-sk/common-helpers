@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
  * @author Adam Ondrejkovic
  * @package Invibe\CommonHelpers\Facades
  */
-class Helpers extends Facade
+class TinyMceConfig extends Facade
 {
     /**
      * @return string
@@ -17,6 +17,6 @@ class Helpers extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'helpers';
+        return 'tinyMceConfig';
     }
 }

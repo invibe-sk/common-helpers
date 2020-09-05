@@ -8,14 +8,14 @@ namespace Invibe\CommonHelpers;
  * @author Adam Ondrejkovic
  * @package Invibe\CommonHelpers
  */
-class Helpers
+class TinyMceConfig
 {
     /**
      * @param int $height
      * @return array
      * @author Adam Ondrejkovic
      */
-    public function tinyMceLongTextConfig(int $height = 800) : array
+    public function longTextConfig(int $height = 800) : array
     {
         return [
             'toolbar' => 'undo redo | bold italic underline strikethrough | formatselect | image | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist |',
@@ -31,7 +31,7 @@ class Helpers
      * @return array
      * @author Adam Ondrejkovic
      */
-    public function tinyMceRegularTextConfig(int $height = 400) : array
+    public function regularTextConfig(int $height = 400) : array
     {
         return [
             'toolbar' => 'undo redo | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist',
