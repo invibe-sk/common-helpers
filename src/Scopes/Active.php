@@ -23,6 +23,6 @@ class Active implements Scope
      */
 	public function apply(Builder $builder, Model $model) : Builder
 	{
-		return $builder->where('active', true);
+		return $builder->where("{$model->getTable()}.active", true);
 	}
 }
