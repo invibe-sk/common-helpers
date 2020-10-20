@@ -24,6 +24,10 @@ class CommonHelpersServiceProvider extends ServiceProvider
             return new BasicJson();
         });
 
+        $this->app->bind('commonFieldsAndColumns', function ($app) {
+            return new CommonFieldsAndColumns();
+        });
+
         $this->mergeConfigFrom(__DIR__.'/config/config.php', 'common-helpers');
 
         $this->loadViewsFrom(__DIR__.'/views', 'common-helpers');
