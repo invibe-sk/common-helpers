@@ -31,7 +31,8 @@
             ],
             "aliases": {
                 "TinyMceConfig": "Invibe\\CommonHelpers\\Facades\\TinyMceConfig",
-                "BasicJson": "Invibe\\CommonHelpers\\Facades\\BasicJson"
+                "BasicJson": "Invibe\\CommonHelpers\\Facades\\BasicJson",
+                "CommonColumns": "Invibe\\CommonHelpers\\Facades\\CommonColumns"
             }
         }
     },

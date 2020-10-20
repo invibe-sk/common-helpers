@@ -5,7 +5,7 @@ namespace Invibe\CommonHelpers\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Class Helpers
+ * Class BasicJson
  * @author Adam Ondrejkovic
  * @package Invibe\CommonHelpers\Facades
  */
