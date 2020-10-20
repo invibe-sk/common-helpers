@@ -4,11 +4,11 @@
 namespace Invibe\CommonHelpers;
 
 /**
- * Class CommonFieldsAndColumns
+ * Class CommonColumns
  * @author Adam Ondrejkovic
  * @package Invibe\CommonHelpers
  */
-class CommonFieldsAndColumns
+class CommonColumns
 {
     /**
      * @param string $name

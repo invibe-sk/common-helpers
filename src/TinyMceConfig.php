@@ -4,7 +4,7 @@
 namespace Invibe\CommonHelpers;
 
 /**
- * Class Helpers
+ * Class TinyMceConfig
  * @author Adam Ondrejkovic
  * @package Invibe\CommonHelpers
  */
