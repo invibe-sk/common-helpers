@@ -68,21 +68,7 @@ trait UploadsImages
         // if a base64 was sent, store it in the db
         if (Str::startsWith($value, 'data:image'))
         {
-            // Make the image
-            $image = Image::make($value);
-
-            // Get extension
-            $mimes = new MimeTypes;
-            $ext = $mimes->getExtension($image->mime);
-
-            // Generate a filename.
-            $filename = md5($value.time()).".{$ext}";
-
-            // Store the image on disk.
-            Storage::disk($disk)->put($filename, $image->stream());
-
-            // Compress image and get compressed file name
-            $compressedFileName = $this->compressImage($value, $filename, $width, $height);
+            $compressedFileName = $this->uploadAndCompressImage($value, $width, $height);
 
             // Delete the previous image, if there was one.
             Storage::disk($disk)->delete($this->{$attributeName});
@@ -93,6 +79,32 @@ trait UploadsImages
         }
 
         return $this;
+    }
+
+    /**
+     * @param $value
+     * @param null $width
+     * @param null $height
+     * @return string
+     * @author Adam Ondrejkovic
+     */
+    public function uploadAndCompressImage($value, $width = null, $height = null)
+    {
+        // Make the image
+        $image = Image::make($value);
+
+        // Get extension
+        $mimes = new MimeTypes;
+        $ext = $mimes->getExtension($image->mime);
+
+        // Generate a filename.
+        $filename = md5($value.time()).".{$ext}";
+
+        // Store the image on disk.
+        Storage::disk($this->getImageUrlDisk())->put($filename, $image->stream());
+
+        // Compress image and get compressed file name
+        return $this->compressImage($value, $filename, $width, $height);
     }
 
     /**
