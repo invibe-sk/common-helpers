@@ -6,33 +6,33 @@
  * Time: 21:14
  */
 
-namespace Invibe\CommonHelpers;
+namespace Invibe\CommonHelpers\Traits;
 
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class CommonFilters
+ * Trait CommonFilters
  * @author Adam Ondrejkovic
- * @package Invibe\CommonHelpers
+ * @package App\Traits\Admin
  */
-class CommonFilters {
+trait CommonFilters {
 
     /**
-     * @param string|null $createdName
-     * @param string|null $updatedName
+     * @param null $createdName
+     * @param null $updatedName
      * @author Adam Ondrejkovic
      */
-    public static function createdUpdatedFilters(string $createdName = null, string $updatedName = null)
+    public function createdUpdatedFilters($createdName = null, $updatedName = null)
     {
-        self::createdFilter($createdName);
-        self::updatedFilter($updatedName);
+        $this->createdFilter($createdName);
+        $this->updatedFilter($updatedName);
     }
 
     /**
-     * @param string|null $updatedName
+     * @param string $updatedName
      * @author Adam Ondrejkovic
      */
-    public static function updatedFilter(string $updatedName = null)
+    public function updatedFilter($updatedName = "Upravený")
     {
         // daterange filter
         CRUD::addFilter([
@@ -49,10 +49,10 @@ class CommonFilters {
     }
 
     /**
-     * @param string|null $createdName
+     * @param string $createdName
      * @author Adam Ondrejkovic
      */
-    public static function createdFilter(string $createdName = null)
+    public function createdFilter($createdName = "Vytvorený")
     {
         // daterange filter
         CRUD::addFilter([
@@ -69,19 +69,18 @@ class CommonFilters {
     }
 
     /**
-     * @param array $names
      * @author Adam Ondrejkovic
      */
-    public static function activeFilter(array $names = [])
+    public function activeFilter()
     {
-        CRUD::addFilter([
+        $this->crud->addFilter([
             'name'  => 'active',
             'type'  => 'dropdown',
             'label' => 'Status'
         ], [
-            1 => $names['active'] ?? 'Aktívne',
-            0 => $names['inactive'] ?? 'Neaktívne',
-        ], function($value) {
+            1 => 'Aktívne',
+            0 => 'Neaktívne',
+        ], function($value) { // if the filter is active
             $this->crud->addClause('where', 'active', $value);
         });
     }
