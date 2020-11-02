@@ -28,6 +28,10 @@ class CommonHelpersServiceProvider extends ServiceProvider
             return new CommonColumns();
         });
 
+        $this->app->bind('commonFilters', function ($app) {
+            return new CommonFilters();
+        });
+
         $this->mergeConfigFrom(__DIR__.'/config/config.php', 'common-helpers');
 
         $this->loadViewsFrom(__DIR__.'/views', 'common-helpers');
