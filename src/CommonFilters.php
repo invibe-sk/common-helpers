@@ -36,7 +36,7 @@ class CommonFilters {
     {
         // daterange filter
         CRUD::addFilter([
-            'type'  => 'date_range_localized',
+            'type'  => 'common-helpers::date_range_localized',
             'name'  => 'updated_at',
             'label' => $updatedName ?? 'Upravený',
         ],
@@ -56,7 +56,7 @@ class CommonFilters {
     {
         // daterange filter
         CRUD::addFilter([
-            'type'  => 'date_range_localized',
+            'type'  => 'common-helpers::date_range_localized',
             'name'  => 'created_at',
             'label' => $createdName ?? 'Vytvorený',
         ],
@@ -75,7 +75,7 @@ class CommonFilters {
     public static function activeFilter(array $names = [])
     {
         CRUD::addFilter([
-            'name'  => 'status',
+            'name'  => 'active',
             'type'  => 'dropdown',
             'label' => 'Status'
         ], [
