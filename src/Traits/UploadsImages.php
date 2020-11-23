@@ -7,10 +7,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
+use Invibe\CommonHelpers\Jobs\OptimizeImage;
 use Mimey\MimeTypes;
 use Throwable;
-use function Tinify\fromFile;
-use function Tinify\setKey;
 
 /**
  * Trait UploadsImages
@@ -125,33 +124,16 @@ trait UploadsImages
 
         $compressedFileName = "c_{$name}.{$ext}";
 
+        Storage::disk($disk)->move($filename, $compressedFileName);
+
+        Image::make(Storage::disk($disk)->path($compressedFileName))
+            ->resize(($width ?? 1200), ($height ?? 1200), function (Constraint $constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->save(Storage::disk($disk)->path($compressedFileName));
+
         if (config('common-helpers.use_tinyfy')) {
-
-            // Set tinyfy key
-            setKey(config('common-helpers.tinyfy_api_key'));
-
-            // Load compressed tinyfy file from filename
-            $compressedImage = fromFile(Storage::disk($disk)->path($filename));
-
-            // Resize compressed tinyfy file to fit the resolution provided
-            $resizedCompressedImage = $compressedImage->resize([
-                "method" => "fit",
-                "width" => $width ?? 1200,
-                "height" => $height ?? 1200,
-            ]);
-
-            // Store compressed image to file
-            $resizedCompressedImage->toFile(Storage::disk($disk)->path($compressedFileName));
-
-        } else {
-            Storage::disk($disk)->move($filename, $compressedFileName);
-
-            Image::make(Storage::disk($disk)->path($compressedFileName))
-                ->resize(($width ?? 1200), ($height ?? 1200), function (Constraint $constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })->save(Storage::disk($disk)->path($compressedFileName));
-
+            OptimizeImage::dispatch($compressedFileName, $this->getImageUrlDisk());
         }
 
         // Create webp image variant
