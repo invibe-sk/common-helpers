@@ -136,9 +136,7 @@ trait UploadsImages
             OptimizeImage::dispatch($compressedFileName, $this->getImageUrlDisk());
         }
 
-        // Create webp image variant
-        $webp = Image::make(Storage::disk($disk)->path($compressedFileName))->encode('webp', 80)->stream();
-        Storage::disk($disk)->put(webpFileName($compressedFileName), $webp);
+        createWebpVariant($disk, $compressedFileName);
 
         // Delete uncompressed image if there is any
         Storage::disk($disk)->delete($filename);
