@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
 use Invibe\CommonHelpers\Jobs\OptimizeImage;
-use Mimey\MimeTypes;
+use Invibe\CommonHelpers\MimeTypes;
 use Throwable;
 
 /**
@@ -93,7 +93,7 @@ trait UploadsImages
         $image = Image::make($value);
 
         // Get extension
-        $mimes = new MimeTypes;
+        $mimes = new MimeTypes();
         $ext = $mimes->getExtension($image->mime);
 
         // Generate a filename.
