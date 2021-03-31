@@ -21,6 +21,15 @@ trait UploadsImages
     abstract protected function getImageUrlDisk() : string;
 
     /**
+     * @return string
+     * @author Adam Ondrejkovic
+     */
+    public function getDefaultImageUrl() : string
+    {
+        return "https://dummyimage.com/500x500";
+    }
+
+    /**
      * @param $image
      * @param bool $webp
      * @return string
@@ -28,8 +37,12 @@ trait UploadsImages
      */
     public function getImageUrl($image, bool $webp = false) : string
     {
-        $filename = $webp ? webpFileName($this->{$image}) : $this->{$image};
-        return Storage::disk($this->getImageUrlDisk())->url($filename);
+        if ($this->{$image}) {
+            $filename = $webp ? webpFileName($this->{$image}) : $this->{$image};
+            return Storage::disk($this->getImageUrlDisk())->url($filename);
+        } else {
+            return $this->getDefaultImageUrl();
+        }
     }
 
     /**
@@ -39,7 +52,7 @@ trait UploadsImages
      */
     public function getImageExt($image)
     {
-        return explode(".", $this->{$image})[1];
+        return explode(".", $this->{$image})[1] ?? null;
     }
 
     /**
