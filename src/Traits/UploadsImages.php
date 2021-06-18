@@ -85,6 +85,12 @@ trait UploadsImages
             // Set attr
             $this->attributes[$attributeName] = $compressedFileName;
         } else {
+
+            if (Str::contains($value, "/")) {
+                $exploded = explode("/", $value);
+                $value = end($exploded);
+            }
+
             $this->attributes[$attributeName] = $value;
         }
 
