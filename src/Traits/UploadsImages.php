@@ -75,11 +75,7 @@ trait UploadsImages
 
             // set null in the database column
             $this->attributes[$attributeName] = null;
-        }
-
-        // if a base64 was sent, store it in the db
-        if (Str::startsWith($value, 'data:image'))
-        {
+        } else if (Str::startsWith($value, 'data:image')) {
             $compressedFileName = $this->uploadAndCompressImage($value, $width, $height);
 
             // Delete the previous image, if there was one.
@@ -88,6 +84,8 @@ trait UploadsImages
 
             // Set attr
             $this->attributes[$attributeName] = $compressedFileName;
+        } else {
+            $this->attributes[$attributeName] = $value;
         }
 
         return $this;
